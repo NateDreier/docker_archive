@@ -1,1 +1,2 @@
-traefik:v2.2
+hello-world:nanoserver
+
