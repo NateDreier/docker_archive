@@ -1,0 +1,65 @@
+#!/usr/bin/env python3
+
+import sys
+import re
+import os
+from os import path
+import concurrent.futures  # https://docs.python.org/3/library/concurrent.futures.html
+import docker  # https://docker-py.readthedocs.io/en/stable/
+
+cli = docker.APIClient(base_url="unix://var/run/docker.sock")
+current_dir = os.getcwd()
+repository = sys.argv[2]
+tar_dir = os.path.join(current_dir, "move")
+
+
+if not path.exists(tar_dir):
+    os.mkdir(tar_dir)
+
+
+def simple_image(image: str):
+    print(f"this is a simple image {image}")
+    img_t = image.split(":")
+    img = img_t[0].strip()
+    t = img_t[1].strip()
+    image = f"{img}:{t}"
+#    print(f"Pulling, retagging, saving and rmi'ing: {image}")
+#    # Pulls the container
+#    cli.pull(image)
+#    # Tags the container with the new tag
+#    cli.tag(image, f"{repository}/{img}", t)
+#
+#    new_image_name = f"{img}{t}.tar"
+#    im = cli.get_image(image)
+#    with open(os.path.join(tar_dir, new_image_name), "wb+") as f:
+#        for chunk in im:
+#            f.write(chunk)
+#
+#    # Deletes all downloaded images
+#    cli.remove_image(image)
+#    cli.remove_image(f"{repository}/{image}")
+
+
+def complex_image(image: str):
+        print(f"this is a complex image: {image}")
+        img_t = image.split(":")
+        i = img_t[0].strip()
+        img_reg = i.split("/")
+        img = img_reg[1].strip()
+        t = img_t[1].strip()
+        image = f"{img}:{t}"
+
+
+if __name__ == "__main__":
+    with concurrent.futures.ProcessPoolExecutor() as executor:
+        """TODO: pass in a string so that I can eliminate the redundant image var
+        in the_whole_shebang function"""
+        with open(sys.argv[1], "r") as f:
+            lines = f.readlines()
+        for line in lines:
+            if line.find('/'):
+                print(line)
+                #executor.map(simple_image, lines)
+            else:
+                pass
+                #executor.map(complex_image, lines)
