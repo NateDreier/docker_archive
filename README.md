@@ -1,18 +1,37 @@
-"""
-The puropose of this program is to quickly pull down any number of containers and put them (tar) in a directory so that they can be moved.
-1. Reads in file
-2. Pulls down the containers
-3. Re-tags the containers
-4. Tars (docker save) up the containers in specified directory
-5. deletes all the containers that it just pulled down.
+# Docker Archive
 
-Example use case, working in an airgapped network where everything needs to be moved across (CD, HDD/SSD, one-way data diod, etc), means that you are pulling down and 
-saving copious amounts of data. Either doing this for one offs or pulling over a bunch of the latest containers. This allows for quick pull, retag, and save.
-"""
+Docker Archive is a simple Python script that takes in a list of `<docker_images>:<tags>`, pulls them all down, re-tags them if needed and tars them up,  
+## Installation
 
-"""
-file example:
-foo:1.2.3
-bar:3.2.1
-baz:7.7.7
-"""
+Use the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
+
+```bash
+https://github.com/NateDreier/docker_archive.git
+```
+
+## Usage
+### Prep
+Have a text file populated with a list of `image:tag`'s. See example below:
+```bash
+# foo.txt
+hello-world:latest
+centos:8
+ubuntu:20.04
+jitsi/jvb:latest
+jitsi/jicofo:4627-1
+```
+### Run 
+```bash
+# Option one
+./docker_archive.py <name_of_.txt>
+# Example: 
+./docker_archive.py img.txt
+
+# Option two
+./docker_archive.py <name_of_.txt> <name_of_repository>
+# Example:
+./docker_archive.py img.txt harbor.myDomain.io
+```
+
+## Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
