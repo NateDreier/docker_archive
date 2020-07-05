@@ -3,8 +3,7 @@
 Docker Archive is a simple Python script that takes in a list of `<docker_images>:<tags>`, pulls them all down, re-tags them if needed and tars them up,  
 ## Installation
 
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
-
+Just clone the repository locally:
 ```bash
 https://github.com/NateDreier/docker_archive.git
 ```
